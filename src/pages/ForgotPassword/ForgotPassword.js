@@ -7,22 +7,15 @@ import {
 	StyleSheet,
 } from 'react-native'
 import SafeAreaView from '../../components/safeAreaView/SafeAreaView'
-import Input from '../../components/input/Input'
-import Button from '../../components/button/Button'
 
-export default function Login({ navigation }) {
+export default function ForgotPassword() {
 	const [user, setUser] = useState('')
 	const [password, setPassword] = useState('')
-
-	// login to the app
-	const login = () => {
-		navigation.navigate('Home')
-	}
-
+	const [confirmPassword, setConfirmPassword] = useState('')
 	return (
 		<SafeAreaView>
-			<View style={styles.container}>
-				<Text style={styles.title}>Login</Text>
+			<View style={styles.content}>
+				<Text style={styles.title}>Esqueci a senha</Text>
 
 				<TextInput
 					style={styles.input}
@@ -34,26 +27,25 @@ export default function Login({ navigation }) {
 				/>
 				<TextInput
 					style={styles.input}
-					placeholder='Digite sua senha'
+					placeholder='Digite a nova senha'
 					placeholderTextColor='#dadada'
 					value={password}
-					keyboardType='visible-password'
+					keyboardType='default'
 					onChangeText={(e) => setPassword(e.valueOf())}
 					secureTextEntry={true}
 				/>
-
-				<View style={styles.view_btns}>
-					<TouchableOpacity
-						style={styles.enter}
-						onPress={() => navigation.navigate('ListDI')}>
-						<Text style={styles.text_btn}>Entrar</Text>
-					</TouchableOpacity>
-					<TouchableOpacity
-						style={styles.btn_forgot_password}
-						onPress={() => navigation.navigate('ForgotPassword')}>
-						<Text style={styles.text_btn}>Esqueci a senha</Text>
-					</TouchableOpacity>
-				</View>
+				<TextInput
+					style={styles.input}
+					placeholder='Confirme a senha'
+					placeholderTextColor='#dadada'
+					value={confirmPassword}
+					keyboardType='default'
+					onChangeText={(e) => setConfirmPassword(e.valueOf())}
+					secureTextEntry={true}
+				/>
+				<TouchableOpacity style={styles.btn_change_password}>
+					<Text style={styles.text_btn}>Alterar a senha</Text>
+				</TouchableOpacity>
 			</View>
 		</SafeAreaView>
 	)
@@ -74,6 +66,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 10,
 		marginBottom: 30,
 		borderRadius: 5,
+		width: '100%',
 	},
 	input: {
 		borderBottomWidth: 0.5,
@@ -86,20 +79,7 @@ const styles = StyleSheet.create({
 		color: '#fff',
 		textAlign: 'center',
 	},
-	view_btns: {
-		width: '100%',
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		marginTop: 60,
-	},
-	enter: {
-		backgroundColor: '#dadada',
-		alignItems: 'center',
-		justifyContent: 'center',
-		borderRadius: 5,
-	},
-	btn_forgot_password: {
+	btn_change_password: {
 		backgroundColor: '#dadada',
 		alignItems: 'center',
 		justifyContent: 'center',

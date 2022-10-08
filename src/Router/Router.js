@@ -1,56 +1,54 @@
 import * as React from 'react'
-import { StatusBar, Text } from 'react-native'
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import { StatusBar } from 'react-native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { NavigationContainer } from '@react-navigation/native'
 import Home from '../pages/Home/Home'
 import Login from '../pages/Login/Login'
-import User from '../pages/User/Index'
-import Client from '../pages/Client/Client'
+import ForgotPassword from '../pages/ForgotPassword/ForgotPassword'
+import ListDI from '../pages/DI/ListDI'
+import DI from '../pages/DI/DI'
 
-const Drawer = createDrawerNavigator()
+const Stack = createNativeStackNavigator()
 
 export default function Router() {
 	return (
 		<NavigationContainer>
 			<StatusBar backgroundColor={'#2a2061'} />
-			<Drawer.Navigator
-				initialRouteName='Login'
+			<Stack.Navigator
+				initialRouteName='Home'
 				useLegacyImplementation
 				screenOptions={{
-					drawerStyle: {
-						backgroundColor: '#2a2061',
-					},
-					drawerLabelStyle: {
-						color: '#fff',
-					},
-					headerTitleStyle: {
-						color: '#fff',
-					},
-					headerTransparent: false,
 					headerStyle: {
 						backgroundColor: '#2a2061',
-						elevation: 0,
 					},
-					headerShown: true,
 				}}>
-				<Drawer.Screen
+				<Stack.Screen
 					name='Home'
 					component={Home}
+					options={{
+						headerShown: false,
+					}}
 				/>
-				<Drawer.Screen
+				<Stack.Screen
 					name='Login'
 					component={Login}
+					options={{
+						headerShown: false,
+					}}
 				/>
-				<Drawer.Screen
-					name='User'
-					component={User}
+				<Stack.Screen
+					name='ForgotPassword'
+					component={ForgotPassword}
 				/>
-				<Drawer.Screen
-					name='Cliente'
-					component={Client}
-					headerShown={true}
+				<Stack.Screen
+					name='ListDI'
+					component={ListDI}
 				/>
-			</Drawer.Navigator>
+				<Stack.Screen
+					name='DI'
+					component={DI}
+				/>
+			</Stack.Navigator>
 		</NavigationContainer>
 	)
 }

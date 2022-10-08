@@ -8,6 +8,8 @@ export default function SafeAreaViewAndroid({ children }) {
 const styles = StyleSheet.create({
 	AndroidSafeArea: {
 		flex: 1,
-		backgroundColor: 'white',
+		backgroundColor: '#2a2061',
+		paddingHorizontal: 20,
+		justifyContent: 'center',
 	},
 })
