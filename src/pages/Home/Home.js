@@ -10,11 +10,10 @@ export default function Home({ navigation }) {
 				<Image
 					style={styles.image}
 					source={require('../../../assets/images/logo_injetaq.jpg')}
-					resizeMode='center'
+					resizeMode='contain'
 				/>
 			</View>
 			<View style={styles.content}>
-				<Text style={styles.text_welcome}>Bem vindo ao APP Injetaq DI</Text>
 				<View style={styles.view_btns}>
 					<TouchableOpacity
 						style={styles.btn}
@@ -28,43 +27,35 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#2a2061',
-	},
 	title: {
-		fontSize: 40,
+		fontSize: 30,
 		textAlign: 'center',
 		color: '#fff',
 		fontWeight: 'bold',
-		marginTop: 30,
 	},
 	viewLogo: {
-		flex: 2,
 		justifyContent: 'center',
 		alignItems: 'center',
+		width: '100%',
+		margin: 0,
+		padding: 0
 	},
 	image: {
-		width: '80%',
+		width: '50%',
+		height: '50%',
+		margin: 0,
+		padding: 0
 	},
 	content: {
-		backgroundColor: '#fff',
 		borderRadius: 20,
 		alignItems: 'center',
 	},
-	text_welcome: {
-		fontWeight: 'bold',
-		fontSize: 18,
-		marginTop: 20,
-	},
 	btn: {
-		backgroundColor: '#2a2061',
+		backgroundColor: '#dadada',
 		borderRadius: 10,
-		marginVertical: 10,
-		width: '50%',
 	},
 	text_btn: {
-		color: '#fff',
+		color: '#2a2061',
 		padding: 10,
 		fontSize: 18,
 		fontWeight: '800',

@@ -7,8 +7,6 @@ import {
 	StyleSheet,
 } from 'react-native'
 import SafeAreaView from '../../components/safeAreaView/SafeAreaView'
-import Input from '../../components/input/Input'
-import Button from '../../components/button/Button'
 
 export default function Login({ navigation }) {
 	const [user, setUser] = useState('')

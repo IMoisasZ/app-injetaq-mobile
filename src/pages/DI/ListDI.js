@@ -1,103 +1,104 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import {
-	FlatList,
-	StatusBar,
-	StyleSheet,
-	Text,
-	View,
-	TouchableOpacity,
-} from 'react-native'
-import SafeAreaView from '../../components/safeAreaView/SafeAreaView'
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from 'react-native';
+import SafeAreaView from '../../components/safeAreaView/SafeAreaView';
+import ItemListDI from './ItemListDI';
+import MyRadioButton from '../../components/radioButton/RadioButton';
+import api from '../../api/api';
 
-const DATA = [
-	{
-		id: 1,
-		di: 4706,
-		client: 'FIAT',
-	},
-	{
-		id: 2,
-		di: 4707,
-		client: 'FIAT',
-	},
-	{
-		id: 3,
-		di: 4708,
-		client: 'FIAT',
-	},
-	{
-		id: 4,
-		di: 4709,
-		client: 'FIAT',
-	},
-	{
-		id: 5,
-		di: 4710,
-		client: 'FIAT',
-	},
-]
+export default function ListDI({ navigation }) {
+  const [listDI, setListDI] = useState([]);
+  const [status, setStatus] = useState('Pendente');
 
-const Item = ({ item, backgroundColor, textColor, navigation }) => (
-	<View>
-		<TouchableOpacity
-			onPress={() => navigation.navigate('DI', { item })}
-			style={[styles.item, backgroundColor]}>
-			<Text style={[styles.title, textColor]}>DI: {item.di}</Text>
-			<Text style={[styles.title, textColor]}>{item.client}</Text>
-		</TouchableOpacity>
-	</View>
-)
+  const data = async () => {
+    const newData = [];
+    const response = await api.get('di');
+    response.data.map((sts) => {
+      if (sts.status.toLowerCase() === status.toLowerCase()) {
+        newData.push(sts);
+      }
+    });
+    setListDI(newData);
+  };
 
-const App = ({ navigation }) => {
-	const [selectedId, setSelectedId] = useState(null)
+  useEffect(() => {
+    data();
+  }, [status]);
 
-	const renderItem = ({ item }) => {
-		const backgroundColor = item.id === selectedId ? '#6e3b6e' : '#f9c2ff'
-		const color = item.id === selectedId ? 'white' : 'black'
+  const renderItem = ({ item }) => {
+    return <ItemListDI item={item} navigation={navigation} />;
+  };
 
-		return (
-			<Item
-				item={item}
-				onPress={() => setSelectedId(item.id)}
-				backgroundColor={{ backgroundColor }}
-				textColor={{ color }}
-				navigation={navigation}
-			/>
-		)
-	}
-
-	return (
-		<SafeAreaView style={styles.container}>
-			<View>
-				<TouchableOpacity
-					style={styles.btn}
-					onPress={() => navigation.navigate('Home')}>
-					<Text>Sair</Text>
-				</TouchableOpacity>
-			</View>
-			<FlatList
-				data={DATA}
-				renderItem={renderItem}
-				keyExtractor={(item) => item.id}
-				extraData={selectedId}
-			/>
-		</SafeAreaView>
-	)
+  return (
+    <SafeAreaView>
+      <View style={styles.view_btn}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => navigation.navigate('Home')}>
+          <Text style={styles.txt_btn}>Sair</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.view_rb}>
+        <MyRadioButton
+          toggleOnPress={() => setStatus('Pendente')}
+          value={status}
+          status={status === 'Pendente' ? 'checked' : 'unchecked'}
+          labelRb='Pendente'
+        />
+        <MyRadioButton
+          toggleOnPress={() => setStatus('Em Execução')}
+          value={status}
+          status={status === 'Em Execução' ? 'checked' : 'unchecked'}
+          labelRb='Em Execução'
+        />
+        <MyRadioButton
+          toggleOnPress={() => setStatus('Encerrada')}
+          value={status}
+          status={status === 'Encerrada' ? 'checked' : 'unchecked'}
+          labelRb='Encerrada'
+        />
+        <MyRadioButton
+          toggleOnPress={() => setStatus('Cancelada')}
+          value={status}
+          status={status === 'Cancelada' ? 'checked' : 'unchecked'}
+          labelRb='Cancelada'
+        />
+      </View>
+      <FlatList
+        data={listDI}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+      />
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		marginTop: StatusBar.currentHeight || 0,
-	},
-	item: {
-		padding: 20,
-		marginVertical: 8,
-		marginHorizontal: 16,
-	},
-	title: {
-		fontSize: 32,
-	},
-})
-
-export default App
+  view_btn: {
+    alignItems: 'flex-end',
+  },
+  btn: {
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end',
+    backgroundColor: '#dadada',
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 5,
+  },
+  view_rb: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderWidth: 0.5,
+    borderColor: '#fff',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginTop: 5,
+  },
+});
